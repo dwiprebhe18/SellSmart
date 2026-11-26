@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   ArrowDownRight,
   ArrowRight,
@@ -7,6 +8,7 @@ import {
   Heart,
   MessageCircle,
   Package,
+  Pause,
   Play,
   Sparkles,
   Store,
@@ -30,6 +32,41 @@ const products = [
 ]
 
 function LandingPage({ onExplore }) {
+  const [storyOpen, setStoryOpen] = useState(false)
+  const [storyPlaying, setStoryPlaying] = useState(false)
+  const [storyScene, setStoryScene] = useState(0)
+  const storySteps = [
+    { eyebrow: '01 / GET ONLINE', title: 'Give your business a home.', description: 'Create a profile that tells your story and helps new customers find you.', icon: Store },
+    { eyebrow: '02 / SHOW WHAT YOU MAKE', title: 'Put your products in the spotlight.', description: 'Share the details, photos, and videos that make your work yours.', icon: Package },
+    { eyebrow: '03 / MEET YOUR CUSTOMERS', title: 'Turn visits into conversations.', description: 'Keep your products and customer enquiries together in one friendly place.', icon: MessageCircle }
+  ]
+  const activeStory = storySteps[storyScene]
+  const StoryIcon = activeStory.icon
+  useEffect(() => {
+    if (!storyOpen || !storyPlaying) return undefined
+    const timer = window.setInterval(() => setStoryScene(current => (current + 1) % storySteps.length), 5000)
+    return () => window.clearInterval(timer)
+  }, [storyOpen, storyPlaying, storySteps.length])
+  useEffect(() => {
+    if (!storyOpen) return undefined
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') {
+        setStoryOpen(false)
+        setStoryPlaying(false)
+      }
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [storyOpen])
+  const openStory = () => {
+    setStoryScene(0)
+    setStoryPlaying(true)
+    setStoryOpen(true)
+  }
+  const closeStory = () => {
+    setStoryOpen(false)
+    setStoryPlaying(false)
+  }
   return (
     <div className="landing-page" id="top">
       <header className="landing-nav">
@@ -57,7 +94,7 @@ function LandingPage({ onExplore }) {
             </p>
             <div className="hero-actions">
               <button className="button-lime" onClick={onExplore}>Explore the dashboard <ArrowRight size={17} /></button>
-              <a className="button-play" href="#features"><span><Play size={13} fill="currentColor" /></span> Take a quick look</a>
+              <button className="button-play" onClick={openStory}><span><Play size={13} fill="currentColor" /></span> Watch our 15-second video</button>
             </div>
             <div className="hero-proof">
               <div className="proof-avatars" aria-hidden="true"><span>B</span><span>M</span><span>A</span><span>+</span></div>
@@ -187,6 +224,39 @@ function LandingPage({ onExplore }) {
           <span className="cta-footnote">A friendly, interactive project preview. No sign-up needed.</span>
         </section>
       </main>
+
+      {storyOpen && <div className="story-overlay" onMouseDown={event => { if (event.target === event.currentTarget) closeStory() }}>
+        <section className="story-player" role="dialog" aria-modal="true" aria-labelledby="story-title">
+          <div className="story-player-heading">
+            <div className="story-player-brand"><span className="landing-brand-mark"><Zap size={16} fill="currentColor" /></span><span>sellsmart<span className="brand-period">.</span></span><small>YOUR BUSINESS, ONLINE</small></div>
+            <button className="story-close" onClick={closeStory} aria-label="Close video"><span>×</span></button>
+          </div>
+          <div className={`story-screen story-scene-${storyScene}`} key={storyScene}>
+            <div className="story-screen-copy">
+              <span className="story-step-label">{activeStory.eyebrow}</span>
+              <h2 id="story-title">{activeStory.title}</h2>
+              <p>{activeStory.description}</p>
+            </div>
+            <div className="story-visual" aria-hidden="true">
+              <div className="story-visual-orbit" />
+              <div className="story-browser">
+                <div className="story-browser-bar"><span><i/><i/><i/></span><small>bloomandbasket.sellsmart</small><span className="story-lock">✳</span></div>
+                {storyScene === 0 && <div className="story-profile-card"><div className="story-profile-cover"/><div className="story-profile-avatar">B<span>&</span>B</div><b>Bloom & Basket</b><small>Thoughtful everyday finds, made with care.</small><span className="story-profile-button">VISIT OUR SHOP</span></div>}
+                {storyScene === 1 && <div className="story-product-cards">{products.map(product=><div className="story-product-card" key={product.name}><img src={product.image} alt=""/><b>{product.name}</b><small>{product.price}</small></div>)}</div>}
+                {storyScene === 2 && <div className="story-message-card"><span className="story-message-icon"><MessageCircle size={19}/></span><div><b>A new customer says hello</b><p>“I love these! Can I order a gift set?”</p></div><span className="story-message-reply">Reply <ArrowRight size={12}/></span></div>}
+              </div>
+              <span className="story-float-star">✳</span>
+              <span className="story-float-tag"><StoryIcon size={14}/>{storyScene === 0 ? 'Your own online home' : storyScene === 1 ? 'Products, beautifully shown' : 'Real customer conversations'}</span>
+            </div>
+          </div>
+          <div className="story-controls">
+            <button className="story-play-button" onClick={() => setStoryPlaying(value => !value)} aria-label={storyPlaying ? 'Pause story' : 'Play story'}>{storyPlaying ? <Pause size={15} fill="currentColor"/> : <Play size={15} fill="currentColor"/>}</button>
+            <div className="story-progress" aria-label="Story progress">{storySteps.map((step,index)=><button key={step.eyebrow} aria-label={`Show step ${index + 1}`} className={`story-progress-step ${index === storyScene ? 'current' : index < storyScene ? 'complete' : ''}`} onClick={() => setStoryScene(index)}><span className="story-progress-fill" style={{ animationPlayState: storyPlaying && index === storyScene ? 'running' : 'paused' }}/></button>)}</div>
+            <span className="story-duration">00:{String((storySteps.length - storyScene) * 5).padStart(2, '0')}</span>
+          </div>
+          <div className="story-player-footer"><span>A quick look at taking your business online with SellSmart.</span><button onClick={() => { closeStory(); onExplore() }}>Explore the demo <ArrowRight size={15}/></button></div>
+        </section>
+      </div>}
 
       <footer className="landing-footer">
         <a className="landing-brand" href="#top">

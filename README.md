@@ -3,11 +3,12 @@
 A responsive React frontend prototype for SellSmart - a digital business growth platform for micro and small businesses.
 
 ## Landing page
-The public landing page introduces SellSmart, previews the business dashboard, and links to the interactive demo.
+The public landing page introduces SellSmart, previews the business dashboard, and includes a short animated walkthrough of getting a business online.
 
 ## Included pages
 ### Business owner workspace
-- Overview dashboard with sample metrics and charts
+- Post-focused business home with a direct post-creation entry point
+- Posts composer with local photo/video upload, webpage image drop, previews, captions, and local demo publishing
 - Business profile editor
 - Product catalogue (search, filter, add and delete demo products)
 - Analytics charts
@@ -45,6 +46,7 @@ npm run preview
 ## Notes
 - This is a frontend prototype with mock/sample data.
 - Actions update local React state only; refreshing resets demo data.
+- Posts and selected media are demo-only and are not sent to a server or social network. Images dropped from webpages remain linked to their original URL.
 - No real authentication, backend, database, payment, email, or external social media API is connected.
 - Product images use remote Unsplash URLs and require internet access.
 - Charts and metrics are illustrative. Replace them with real data after integrating the Java Spring Boot backend and MySQL database.

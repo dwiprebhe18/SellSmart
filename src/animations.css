@@ -31,6 +31,21 @@
   }
 }
 
+@keyframes post-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-9px) rotate(9deg);
+  }
+}
+
+@keyframes post-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .page-content > * {
   animation: sellsmart-rise-in 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
@@ -161,6 +176,31 @@
 
 .nav-item.active {
   box-shadow: inset 3px 0 #7666df;
+}
+
+.welcome-card {
+  animation: sellsmart-rise-in 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.welcome-art-note {
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.welcome-art-note:hover {
+  transform: rotate(-2deg) translateY(-3px);
+  box-shadow: 0 20px 46px #56468025;
+}
+
+.home-post-card,
+.published-post-card {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.home-post-card:hover,
+.published-post-card:hover {
+  transform: translateY(-3px);
+  border-color: #d9d2f3;
+  box-shadow: 0 12px 28px #34304d0d;
 }
 
 button:focus-visible,
