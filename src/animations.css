@@ -1,0 +1,184 @@
+@keyframes sellsmart-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sellsmart-chart-in {
+  from {
+    opacity: 0;
+    transform: scaleY(0.94);
+    transform-origin: bottom;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes sellsmart-icon-pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.09);
+  }
+}
+
+.page-content > * {
+  animation: sellsmart-rise-in 560ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.page-content > :nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.page-content > :nth-child(3) {
+  animation-delay: 130ms;
+}
+
+.page-content > :nth-child(4) {
+  animation-delay: 190ms;
+}
+
+.page-content > :nth-child(5) {
+  animation-delay: 250ms;
+}
+
+.metric-card,
+.price-card {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.metric-card:hover,
+.price-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px #34304d12;
+}
+
+.metric-card:hover .metric-icon {
+  animation: sellsmart-icon-pop 360ms ease;
+}
+
+.panel {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.panel:hover {
+  border-color: #e2dff5;
+  box-shadow: 0 10px 28px #34304d09;
+}
+
+.btn,
+.icon-btn,
+.nav-item,
+.text-link,
+.task-check,
+.product-cell img,
+.brand-mark,
+.insight-symbol {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled),
+.icon-btn:active,
+.task-check:active {
+  transform: scale(0.96);
+}
+
+.icon-btn:hover,
+.nav-item:hover,
+.text-link:hover {
+  transform: translateX(2px);
+}
+
+.brand-mark:hover {
+  transform: rotate(-8deg) scale(1.06);
+  box-shadow: 0 8px 18px #7666df40;
+}
+
+.product-cell:hover img {
+  transform: scale(1.07);
+  box-shadow: 0 5px 12px #24263720;
+}
+
+.insight-item,
+.task-row,
+.roadmap-item,
+.planner-row,
+.competitor-row,
+.enquiry-row {
+  animation: sellsmart-rise-in 440ms ease both;
+}
+
+.insight-item:nth-child(2),
+.task-row:nth-child(2),
+.roadmap-item:nth-child(2),
+.planner-row:nth-child(2),
+.competitor-row:nth-child(2),
+.enquiry-row:nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.insight-item:nth-child(3),
+.task-row:nth-child(3),
+.roadmap-item:nth-child(3),
+.planner-row:nth-child(3),
+.competitor-row:nth-child(3),
+.enquiry-row:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.chart-wrap {
+  animation: sellsmart-chart-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.help-card:hover .help-icon,
+.growth-banner:hover .banner-art {
+  transform: rotate(-5deg) scale(1.06);
+}
+
+.nav-item.active {
+  box-shadow: inset 3px 0 #7666df;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #7666df55;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
